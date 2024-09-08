@@ -20,8 +20,60 @@ model User {
   avatarUrl String?
   role      UserRole @default(USER)
 
+  clients      Client[]
+  codes        Code[]
+  accessTokens AccessToken[]
+
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @default(now()) @map(name: "updated_at")
 
-  @@map(name: "users")
+  @@map("users")
+}
+
+model Client {
+  id          String  @id @default(cuid())
+  name        String
+  redirectUri String
+  home        String
+  logo        String
+  description String?
+
+  clientId     String @unique
+  clientSecret String
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  authCodes    Code[]
+  accessTokens AccessToken[]
+
+  @@map("clients")
+}
+
+model Code {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  expiresAt DateTime
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  clientId String
+  client   Client @relation(fields: [clientId], references: [id])
+
+  @@map("codes")
+}
+
+model AccessToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  expiresAt DateTime
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  clientId String
+  client   Client @relation(fields: [clientId], references: [id])
+
+  @@map("access_tokens")
 }

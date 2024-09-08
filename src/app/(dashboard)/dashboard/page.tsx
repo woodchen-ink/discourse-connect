@@ -13,6 +13,14 @@ export default function DashboardPage() {
               Home
             </a>
           </li>
+          <li className="mb-2">
+            <a
+              href="/dashboard/clients"
+              className="block rounded px-4 py-2 hover:bg-gray-700"
+            >
+              Client
+            </a>
+          </li>
         </ul>
       </nav>
 
