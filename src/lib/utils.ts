@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function generateClientKeyId(length: number = 16): string {
+export function generateRandomKey(length: number = 16): string {
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   const charactersLength = characters.length;
@@ -21,7 +21,7 @@ export function generateClientKeyId(length: number = 16): string {
   return result;
 }
 
-export function generateSecretKey(length: number = 32): string {
+export function generateSecretWords(length: number = 32): string {
   const buffer = WordArray.random(length);
   return buffer.toString();
 }

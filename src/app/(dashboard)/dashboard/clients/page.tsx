@@ -1,4 +1,7 @@
-import { prisma } from "@/lib/prisma";
+import { redirect } from "next/navigation";
+
+import { getClientsByUserId } from "@/lib/dto/client";
+import { getCurrentUser } from "@/lib/session";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -11,25 +14,16 @@ import {
 import { AddClientButton } from "@/components/clients/add-client";
 
 // 创建 Prisma 客户端实例
-async function fetchClients() {
-  return await prisma.client.findMany({
-    select: {
-      id: true,
-      name: true,
-      clientId: true,
-      redirectUri: true,
-      user: {
-        select: {
-          name: true,
-          email: true,
-        },
-      },
-    },
-  });
+async function fetchClients(userId: string) {
+  return await getClientsByUserId(userId);
 }
 
 export default async function ClientsPage() {
-  const clients = await fetchClients();
+  const user = await getCurrentUser();
+  if (!user) {
+    redirect("sign-in");
+  }
+  const clients = await fetchClients(user.id as string);
 
   return (
     <div className="container mx-auto py-10">
@@ -52,6 +46,7 @@ export default async function ClientsPage() {
           <TableRow>
             <TableHead>Name</TableHead>
             <TableHead>Client ID</TableHead>
+            <TableHead>Client Secret Key</TableHead>
             <TableHead>Redirect URI</TableHead>
             <TableHead>Actions</TableHead>
           </TableRow>
@@ -61,10 +56,8 @@ export default async function ClientsPage() {
             <TableRow key={client.id}>
               <TableCell>{client.name}</TableCell>
               <TableCell>{client.clientId}</TableCell>
+              <TableCell>{client.clientSecret}</TableCell>
               <TableCell>{client.redirectUri}</TableCell>
-              <TableCell>
-                {client.user.name} ({client.user.email})
-              </TableCell>
               <TableCell>
                 <Button variant="outline" size="sm" className="mr-2">
                   Edit

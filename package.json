@@ -1,5 +1,5 @@
 {
-  "name": "next-shadcn-auth-template",
+  "name": "discourse-oauth",
   "version": "0.1.0",
   "private": true,
   "scripts": {

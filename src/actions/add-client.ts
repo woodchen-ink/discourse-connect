@@ -1,8 +1,8 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
+import { createClient, getClientByClientId } from "@/lib/dto/client";
 import { getCurrentUser } from "@/lib/session";
-import { generateClientKeyId, generateSecretKey } from "@/lib/utils";
+import { generateRandomKey, generateSecretWords } from "@/lib/utils";
 
 export async function AddClientAction(formData: FormData) {
   const name = formData.get("name") as string;
@@ -14,24 +14,22 @@ export async function AddClientAction(formData: FormData) {
   const user = await getCurrentUser();
 
   // Generate a unique client ID and secret
-  let clientId = generateClientKeyId();
-  while (await findClientByClientId(clientId)) {
-    clientId = generateClientKeyId();
+  let clientId = generateRandomKey();
+  while (await getClientByClientId(clientId)) {
+    clientId = generateRandomKey();
   }
-  const clientSecret = generateSecretKey();
+  const clientSecret = generateSecretWords();
 
   try {
-    const newClient = await prisma.client.create({
-      data: {
-        name,
-        home,
-        logo,
-        redirectUri,
-        description,
-        clientId,
-        clientSecret,
-        userId: user?.id,
-      },
+    const newClient = await createClient({
+      name,
+      home,
+      logo,
+      redirectUri,
+      description,
+      clientId,
+      clientSecret,
+      userId: user?.id || "",
     });
 
     console.log("New client created:", newClient);
@@ -40,12 +38,4 @@ export async function AddClientAction(formData: FormData) {
     console.error("Error creating client:", error);
     return { success: false, error: "Failed to create client" };
   }
-}
-
-async function findClientByClientId(clientId: string) {
-  return await prisma.client.findUnique({
-    where: {
-      clientId,
-    },
-  });
 }
