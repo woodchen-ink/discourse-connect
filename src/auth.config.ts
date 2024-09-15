@@ -1,7 +1,7 @@
 import type { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
-import { verify } from "./lib/discourse-verify";
+import { discourseCallbackVerify } from "./lib/discourse/verify";
 
 // Notice this is only an object, not a full Auth.js instance
 export default {
@@ -14,7 +14,7 @@ export default {
       authorize: async (credentials) => {
         const sso = credentials.sso as string;
         const sig = credentials.sig as string;
-        const user = await verify(sso, sig);
+        const user = await discourseCallbackVerify(sso, sig);
         return user;
       },
     }),

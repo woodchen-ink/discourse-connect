@@ -1,8 +1,5 @@
-import { redirect } from "next/navigation";
-
 import { getClientByClientId } from "@/lib/dto/client";
-import { prisma } from "@/lib/prisma";
-import { AuthorizationCard } from "@/components/auth/authorization-card";
+import { Authorizing } from "@/components/auth/authorizing";
 
 export interface AuthorizeParams extends Record<string, string> {
   scope: string;
@@ -16,6 +13,7 @@ export default async function OAuthAuthorization({
 }: {
   searchParams: AuthorizeParams;
 }) {
+  // params invalid
   if (
     !searchParams.response_type ||
     !searchParams.client_id ||
@@ -24,34 +22,16 @@ export default async function OAuthAuthorization({
     throw new Error("Params invalid");
   }
 
-  const client = await getClient({
-    clientId: searchParams.client_id,
-    redirectUri: searchParams.redirect_uri,
-  });
-
-  if (!client) {
+  // client invalid
+  const client = await getClientByClientId(searchParams.client_id);
+  if (!client || client.redirectUri !== searchParams.redirect_uri) {
     throw new Error("Client not found");
   }
 
+  // Authorizing ...
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4">
-      <AuthorizationCard client={client} />
+      <Authorizing />
     </div>
   );
-}
-
-async function getClient({
-  clientId,
-  redirectUri,
-}: {
-  clientId: string;
-  redirectUri: string;
-}) {
-  const client = await getClientByClientId(clientId);
-
-  if (client && client.redirectUri === redirectUri) {
-    return client;
-  }
-
-  return null;
 }

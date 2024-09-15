@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { getDiscourseSSOUrl } from "@/actions/discourse-sso-url";
+import { useRouter } from "next/navigation";
+import { handleAuthorizeAction } from "@/actions/authorizing";
 import { Client } from "@prisma/client";
 import {
   ChevronsDownUp,
@@ -35,19 +35,29 @@ const permissions: Permission[] = [
   },
 ];
 
-export function AuthorizationCard({ client }: { client: Client }) {
+export function AuthorizationCard({
+  client,
+  oauthParams,
+}: {
+  client: Client;
+  oauthParams: string;
+}) {
   const [expandedPermission, setExpandedPermission] = useState<string | null>(
     null,
   );
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const togglePermission = (id: string) => {
     setExpandedPermission(expandedPermission === id ? null : id);
   };
 
   const authorizingHandler = async () => {
-    const url = await getDiscourseSSOUrl(searchParams.toString());
+    const url = await handleAuthorizeAction(
+      oauthParams,
+      client.userId,
+      client.id,
+      permissions[0].id,
+    );
     router.push(url);
   };
 

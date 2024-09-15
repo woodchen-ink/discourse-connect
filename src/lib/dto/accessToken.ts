@@ -9,8 +9,14 @@ export async function createAccessToken(
 }
 
 export async function getAccessTokenByToken(token: string) {
-  return prisma.accessToken.findUnique({
-    where: { token },
+  const now = new Date();
+  return prisma.accessToken.findFirst({
+    where: {
+      token,
+      expiresAt: {
+        gt: now,
+      },
+    },
     include: { user: true },
   });
 }

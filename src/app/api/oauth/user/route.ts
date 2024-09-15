@@ -5,6 +5,7 @@ import { getAccessTokenByToken } from "@/lib/dto/accessToken";
 
 export async function GET(req: Request) {
   const authorization = req.headers.get("Authorization");
+  // verify access token
   const token = authorization?.slice(7); // remove "Bearer "
   if (!token) {
     return new NextResponse("Invalid access token (code: -1000).", {
@@ -18,8 +19,8 @@ export async function GET(req: Request) {
     });
   }
 
+  // return user
   let user = accessToken.user;
-
   return Response.json({
     id: user.id,
     email: user.email,

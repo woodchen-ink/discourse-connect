@@ -35,6 +35,7 @@ CREATE TABLE "codes" (
     "id" TEXT NOT NULL,
     "code" TEXT NOT NULL,
     "expiresAt" TIMESTAMP(3) NOT NULL,
+    "deletedAt" TIMESTAMP(3),
     "userId" TEXT NOT NULL,
     "clientId" TEXT NOT NULL,
 
@@ -52,6 +53,18 @@ CREATE TABLE "access_tokens" (
     CONSTRAINT "access_tokens_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "authorizations" (
+    "id" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "userId" TEXT NOT NULL,
+    "clientId" TEXT NOT NULL,
+    "scope" TEXT,
+
+    CONSTRAINT "authorizations_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "users_username_key" ON "users"("username");
 
@@ -67,6 +80,9 @@ CREATE UNIQUE INDEX "codes_code_key" ON "codes"("code");
 -- CreateIndex
 CREATE UNIQUE INDEX "access_tokens_token_key" ON "access_tokens"("token");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "authorizations_userId_clientId_key" ON "authorizations"("userId", "clientId");
+
 -- AddForeignKey
 ALTER TABLE "clients" ADD CONSTRAINT "clients_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
@@ -81,3 +97,9 @@ ALTER TABLE "access_tokens" ADD CONSTRAINT "access_tokens_userId_fkey" FOREIGN K
 
 -- AddForeignKey
 ALTER TABLE "access_tokens" ADD CONSTRAINT "access_tokens_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "clients"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "authorizations" ADD CONSTRAINT "authorizations_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "authorizations" ADD CONSTRAINT "authorizations_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "clients"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
