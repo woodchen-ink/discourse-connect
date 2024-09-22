@@ -29,6 +29,7 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
 RUN set -x \
+    && apk add --no-cache curl \
     && corepack enable pnpm \
     && pnpm add prisma
 
