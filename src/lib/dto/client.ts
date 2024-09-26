@@ -1,14 +1,14 @@
-import { Client } from "@prisma/client";
+import { Prisma as PrismaType } from "@prisma/client";
 
 import { prisma } from "@/lib/prisma";
 
-export async function getClientByClientId(
-  clientId: string,
-): Promise<Client | null> {
+export async function getClientByClientId(clientId: string) {
   return prisma.client.findUnique({ where: { clientId } });
 }
 
-export async function createClient(data: Omit<Client, "id">): Promise<Client> {
+export async function createClient(
+  data: PrismaType.ClientUncheckedCreateInput,
+) {
   return prisma.client.create({ data });
 }
 

@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
   return (
-    <div className="container flex h-screen w-screen flex-col items-center justify-center">
+    <>
       <Link
         href="/"
         className={cn(
@@ -32,7 +32,9 @@ export default function LoginPage() {
           <MessageCircleCode className="mx-auto size-12" />
           <div className="text-2xl font-semibold tracking-tight">
             <span>Welcome to</span>{" "}
-            <span style={{ fontFamily: "Bahamas Bold" }}>数字牧民社区</span>
+            <span style={{ fontFamily: "Bahamas Bold" }}>
+              数字牧民社区 Connect
+            </span>
           </div>
         </div>
         <Suspense>
@@ -56,6 +58,6 @@ export default function LoginPage() {
           .
         </p>
       </div>
-    </div>
+    </>
   );
 }
