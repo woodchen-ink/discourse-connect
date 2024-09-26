@@ -25,8 +25,10 @@ export async function GET(req: Request) {
     id: user.id,
     email: user.email,
     username: user.username,
-    admin: user.role == UserRole.ADMIN,
     avatar_url: user.avatarUrl,
     name: user.name,
+    admin: user.role == UserRole.ADMIN,
+    moderator: user.moderator,
+    groups: user.groups,
   });
 }

@@ -9,8 +9,10 @@ CREATE TABLE "users" (
     "name" TEXT,
     "avatarUrl" TEXT,
     "role" "UserRole" NOT NULL DEFAULT 'USER',
-    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "moderator" BOOLEAN NOT NULL DEFAULT false,
+    "groups" TEXT[],
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
@@ -26,6 +28,8 @@ CREATE TABLE "clients" (
     "clientId" TEXT NOT NULL,
     "clientSecret" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "clients_pkey" PRIMARY KEY ("id")
 );

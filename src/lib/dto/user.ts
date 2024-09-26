@@ -1,8 +1,6 @@
-import { User } from "@prisma/client";
+import { Prisma as PrismaType } from "@prisma/client";
 
 import { prisma } from "../prisma";
-
-export interface UpdateUserForm extends Omit<User, "id" | "createdAt"> {}
 
 export const getUserById = async (id: string) => {
   try {
@@ -14,7 +12,10 @@ export const getUserById = async (id: string) => {
   }
 };
 
-export const updateUser = async (userId: string, data: UpdateUserForm) => {
+export const updateUser = async (
+  userId: string,
+  data: PrismaType.UserUpdateInput,
+) => {
   try {
     const session = await prisma.user.update({
       where: {
@@ -28,7 +29,7 @@ export const updateUser = async (userId: string, data: UpdateUserForm) => {
   }
 };
 
-export const createUser = async (data: User) => {
+export const createUser = async (data: PrismaType.UserCreateInput) => {
   try {
     const session = await prisma.user.create({
       data,

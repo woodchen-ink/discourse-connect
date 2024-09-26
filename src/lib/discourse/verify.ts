@@ -33,6 +33,8 @@ export async function discourseCallbackVerify(sso: string, sig: string) {
   const name = searchParams.get("name");
   const avatarUrl = searchParams.get("avatar_url");
   const isAdmin = searchParams.get("admin") == "true";
+  const moderator = searchParams.get("moderator") == "true";
+  const groups = searchParams.get("groups")?.split(",");
   if (!id || !email || !username) {
     throw new Error("User not found.");
   }
@@ -47,7 +49,8 @@ export async function discourseCallbackVerify(sso: string, sig: string) {
       name,
       avatarUrl,
       role: isAdmin ? UserRole.ADMIN : UserRole.USER,
-      updatedAt: new Date(),
+      moderator,
+      groups,
     });
   } else {
     // 创建
@@ -58,8 +61,8 @@ export async function discourseCallbackVerify(sso: string, sig: string) {
       name,
       avatarUrl,
       role: isAdmin ? UserRole.ADMIN : UserRole.USER,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      moderator,
+      groups,
     });
   }
 

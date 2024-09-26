@@ -21,6 +21,7 @@ export async function getClientsByUserId(userId: string) {
       clientId: true,
       clientSecret: true,
       redirectUri: true,
+      createdAt: true,
     },
   });
 }

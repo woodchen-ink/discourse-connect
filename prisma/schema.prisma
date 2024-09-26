@@ -19,6 +19,8 @@ model User {
   name      String?
   avatarUrl String?
   role      UserRole @default(USER)
+  moderator Boolean  @default(false)
+  groups    String[]
 
   clients      Client[]
   codes        Code[]
@@ -26,8 +28,8 @@ model User {
 
   authorizations Authorization[]
 
-  createdAt DateTime @default(now()) @map(name: "created_at")
-  updatedAt DateTime @default(now()) @map(name: "updated_at")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("users")
 }
@@ -50,6 +52,9 @@ model Client {
   accessTokens AccessToken[]
 
   authorizations Authorization[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("clients")
 }
