@@ -8,7 +8,8 @@ import WordArray from "crypto-js/lib-typedarrays";
 import { AUTH_NONCE } from "@/lib/constants";
 
 const appHost = process.env.NEXT_PUBLIC_HOST_URL;
-const oauthSecret = process.env.DISCOUSE_SECRET || "";
+const discourseHost = process.env.DISCOURSE_HOST;
+const oauthSecret = process.env.DISCOURSE_SECRET || "";
 
 export async function getDiscourseSSOUrl(searchParams: string) {
   console.log(`searchParams: ${searchParams}`);
@@ -19,5 +20,5 @@ export async function getDiscourseSSOUrl(searchParams: string) {
   const sig = hmacSHA256(sso, oauthSecret).toString(Hex);
   cookies().set(AUTH_NONCE, nonce, { maxAge: 60 * 10 });
 
-  return `https://shuzimumin.com/session/sso_provider?sso=${sso}&sig=${sig}`;
+  return `${discourseHost}/session/sso_provider?sso=${sso}&sig=${sig}`;
 }

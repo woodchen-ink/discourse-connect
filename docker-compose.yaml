@@ -6,7 +6,7 @@ services:
       - "3000:3000"
     restart: always
     environment:
-      DATABASE_URL: postgresql://next:next@db:5432/next
+      DATABASE_URL: postgresql://discourse_connect:discourse_connect@db:5432/discourse_connect
     depends_on:
       db:
         condition: service_healthy
@@ -19,9 +19,9 @@ services:
   db:
     image: postgres:15-alpine
     environment:
-      POSTGRES_DB: next
-      POSTGRES_USER: next
-      POSTGRES_PASSWORD: next
+      POSTGRES_DB: discourse_connect
+      POSTGRES_USER: discourse_connect
+      POSTGRES_PASSWORD: discourse_connect
     volumes:
       - next-db-data:/var/lib/postgresql/data
     restart: always

@@ -8,7 +8,7 @@ import hmacSHA256 from "crypto-js/hmac-sha256";
 import { AUTH_NONCE } from "@/lib/constants";
 import { createUser, getUserById, updateUser } from "@/lib/dto/user";
 
-const DISCOUSE_SECRET = process.env.DISCOUSE_SECRET as string;
+const DISCOUSE_SECRET = process.env.DISCOURSE_SECRET as string;
 
 export async function discourseCallbackVerify(sso: string, sig: string) {
   // 校验数据正确性
