@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { User } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 
 import DynamicLogo from "../dynamic-logo";
@@ -41,24 +42,43 @@ export function NavBar() {
                   <Button
                     variant="outline"
                     size="icon"
-                    className="overflow-hidden rounded-full"
+                    className="relative h-9 w-9 overflow-hidden rounded-full"
                   >
-                    <Image
-                      src={user.avatarUrl as string}
-                      width={36}
-                      height={36}
-                      alt="Avatar"
-                      className="overflow-hidden rounded-full"
-                    />
+                    {user.avatarUrl ? (
+                      <Image
+                        src={user.avatarUrl}
+                        width={36}
+                        height={36}
+                        alt={user.name || "用户头像"}
+                        className="h-full w-full object-cover"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = "none";
+                          target.nextElementSibling?.classList.remove("hidden");
+                        }}
+                      />
+                    ) : null}
+                    <User className="h-5 w-5" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuLabel>
+                    {user.name || user.username || "用户"}
+                  </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>Settings</DropdownMenuItem>
-                  <DropdownMenuItem>Support</DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/dashboard">控制台</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/dashboard/clients">应用管理</Link>
+                  </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>Logout</DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="text-red-600 dark:text-red-400"
+                    onClick={() => signOut()}
+                  >
+                    退出登录
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (

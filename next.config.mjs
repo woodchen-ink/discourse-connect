@@ -8,6 +8,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "q58.pro",
       },
+      {
+        protocol: "https",
+        hostname: "i-aws.czl.net",
+      },
     ],
   },
 };
