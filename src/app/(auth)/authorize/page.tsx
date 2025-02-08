@@ -10,7 +10,7 @@ type Props = {
 };
 
 export const metadata: Metadata = {
-  title: `Auth – 数字牧民社区`,
+  title: `Auth – Q58论坛`,
   description: "Sign in to your account",
 };
 
@@ -21,7 +21,7 @@ export default function AuthPage({ searchParams }: Props) {
         <MessageCircleCode className="mx-auto size-12" />
         <div className="text-2xl font-semibold tracking-tight">
           <span>Welcome to</span>{" "}
-          <span style={{ fontFamily: "Bahamas Bold" }}>数字牧民社区</span>
+          <span style={{ fontFamily: "Bahamas Bold" }}>Q58论坛</span>
         </div>
       </div>
       <div>

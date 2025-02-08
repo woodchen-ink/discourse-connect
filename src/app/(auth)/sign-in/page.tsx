@@ -32,9 +32,7 @@ export default function LoginPage() {
           <MessageCircleCode className="mx-auto size-12" />
           <div className="text-2xl font-semibold tracking-tight">
             <span>Welcome to</span>{" "}
-            <span style={{ fontFamily: "Bahamas Bold" }}>
-              数字牧民社区 Connect
-            </span>
+            <span style={{ fontFamily: "Bahamas Bold" }}>Q58论坛 Connect</span>
           </div>
         </div>
         <Suspense>

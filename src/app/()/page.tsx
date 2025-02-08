@@ -17,12 +17,12 @@ export default function IndexPage() {
       <main className="flex flex-grow items-center justify-center py-16 sm:py-24">
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
           <h1 className="mb-8 bg-gradient-to-r from-[#25263A] to-[#4A4B68] bg-clip-text text-5xl font-extrabold text-transparent dark:from-[#A0A1B2] dark:to-[#D1D2E0] sm:text-6xl">
-            数字牧民 Connect
+            Q58 Connect
           </h1>
           <p className="mb-12 text-xl leading-relaxed text-gray-700 dark:text-gray-300 sm:text-2xl">
-            数字牧民 Connect 是数字牧民社区基于 Discourse SSO 身份认证的 OAuth
-            2.0 服务。通过数字牧民 Connect
-            认证服务，将您的数字牧民账号与第三方应用进行安全、便捷的集成。
+            Q58 Connect 是Q58论坛基于 Discourse SSO 身份认证的 OAuth 2.0
+            服务。通过Q58 Connect
+            认证服务，将您的Q58账号与第三方应用进行安全、便捷的集成。
           </p>
           <div className="flex flex-col justify-center space-y-4 sm:flex-row sm:space-x-6 sm:space-y-0">
             <Link href="/dashboard">
@@ -52,7 +52,7 @@ export default function IndexPage() {
             href="https://shuzimumin.com"
             className="text-[#25263A] hover:underline dark:text-[#A0A1B2]"
           >
-            数字牧民社区
+            Q58论坛
           </a>
           . 保留所有权利。
         </div>

@@ -28,7 +28,7 @@ export function NavBar() {
             <div className="flex items-center space-x-3">
               <DynamicLogo />
               <h1 className="text-2xl font-bold text-[#25263A] dark:text-white">
-                数字牧民 Connect
+                Q58 Connect
               </h1>
             </div>
           </Link>

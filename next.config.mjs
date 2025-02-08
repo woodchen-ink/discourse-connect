@@ -6,7 +6,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "shuzimumin.com",
+        hostname: "q58.pro",
       },
     ],
   },

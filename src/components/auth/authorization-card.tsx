@@ -126,7 +126,7 @@ export function AuthorizationCard({
         <div className="flex justify-center space-x-8 text-sm text-gray-500">
           <div className="flex items-center">
             <Users className="mr-1 h-4 w-4" />
-            <span>数字牧民社区运营</span>
+            <span>Q58论坛运营</span>
           </div>
         </div>
       </CardFooter>

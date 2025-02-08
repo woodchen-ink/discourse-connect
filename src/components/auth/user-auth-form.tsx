@@ -53,7 +53,7 @@ export function UserAuthForm({
         ) : (
           <MessageCircleCode className="mr-2 size-4" />
         )}{" "}
-        数字牧民社区
+        Q58论坛
       </button>
     </div>
   );
