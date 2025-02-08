@@ -130,10 +130,23 @@ pnpm turbo
   "email": "user@example.com",
   "username": "username",
   "admin": false,
+  "moderator": false,
   "avatar_url": "https://example.com/avatar.jpg",
-  "name": "User Name"
+  "name": "User Name",
+  "groups": ["group1", "group2"]
 }
 ```
+
+**响应字段说明：**
+
+- `id`: 用户唯一标识
+- `email`: 用户邮箱
+- `username`: 用户名
+- `admin`: 是否是管理员
+- `moderator`: 是否是版主
+- `avatar_url`: 头像地址
+- `name`: 用户昵称
+- `groups`: 用户所属的论坛用户组列表
 
 ### 使用流程
 
