@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 
 import { getCurrentUser } from "@/lib/session";
+import { DashboardHeader } from "@/components/layout/dashboard-header";
 
 export default async function DashboardLayout({
   children,
@@ -10,5 +11,10 @@ export default async function DashboardLayout({
   const user = await getCurrentUser();
   if (!user) redirect("/sign-in");
 
-  return <div className="min-h-screen">{children}</div>;
+  return (
+    <div className="min-h-screen">
+      <DashboardHeader />
+      {children}
+    </div>
+  );
 }

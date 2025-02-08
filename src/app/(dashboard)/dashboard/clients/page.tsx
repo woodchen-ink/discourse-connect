@@ -26,50 +26,49 @@ export default async function ClientsPage() {
   const clients = await fetchClients(user.id as string);
 
   return (
-    <div className="container mx-auto py-10">
-      <div className="mb-5 flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Clients</h1>
-        <div className="mb-4">
-          {/* <Input
-          type="text"
-          placeholder="Search clients..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="max-w-sm"
-        /> */}
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mb-6 flex items-center justify-between">
+        <div>
+          <h2 className="text-base text-muted-foreground">
+            管理您的 OAuth 应用程序
+          </h2>
         </div>
-
         <AddClientButton />
       </div>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Client ID</TableHead>
-            <TableHead>Client Secret Key</TableHead>
-            <TableHead>Redirect URI</TableHead>
-            <TableHead>Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {clients.map((client) => (
-            <TableRow key={client.id}>
-              <TableCell>{client.name}</TableCell>
-              <TableCell>{client.clientId}</TableCell>
-              <TableCell>{client.clientSecret}</TableCell>
-              <TableCell>{client.redirectUri}</TableCell>
-              <TableCell>
-                <Button variant="outline" size="sm" className="mr-2">
-                  Edit
-                </Button>
-                <Button variant="destructive" size="sm">
-                  Delete
-                </Button>
-              </TableCell>
+
+      <div className="rounded-md border">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>应用名称</TableHead>
+              <TableHead>Client ID</TableHead>
+              <TableHead>Client Secret</TableHead>
+              <TableHead>回调地址</TableHead>
+              <TableHead className="text-right">操作</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {clients.map((client) => (
+              <TableRow key={client.id}>
+                <TableCell>{client.name}</TableCell>
+                <TableCell className="font-mono">{client.clientId}</TableCell>
+                <TableCell className="font-mono">
+                  {client.clientSecret}
+                </TableCell>
+                <TableCell>{client.redirectUri}</TableCell>
+                <TableCell className="text-right">
+                  <Button variant="outline" size="sm" className="mr-2">
+                    编辑
+                  </Button>
+                  <Button variant="destructive" size="sm">
+                    删除
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 }

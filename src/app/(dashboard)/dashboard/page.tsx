@@ -1,34 +1,53 @@
+import Link from "next/link";
+import { AppWindow, Settings } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
 export default function DashboardPage() {
   return (
-    <div className="flex h-screen">
-      {/* Sidebar Navigation */}
-      <nav className="w-64 bg-gray-800 p-4 text-white">
-        <h2 className="mb-4 text-2xl font-bold">Dashboard</h2>
-        <ul>
-          <li className="mb-2">
-            <a
-              href="/dashboard"
-              className="block rounded px-4 py-2 hover:bg-gray-700"
-            >
-              Home
-            </a>
-          </li>
-          <li className="mb-2">
-            <a
-              href="/dashboard/clients"
-              className="block rounded px-4 py-2 hover:bg-gray-700"
-            >
-              Client
-            </a>
-          </li>
-        </ul>
-      </nav>
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <AppWindow className="h-6 w-6" />
+              应用管理
+            </CardTitle>
+            <CardDescription>
+              管理您的 OAuth 应用，查看应用详情和统计信息
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Link href="/dashboard/clients">
+              <Button className="w-full">查看应用</Button>
+            </Link>
+          </CardContent>
+        </Card>
 
-      {/* Main Content Area */}
-      <main className="flex-1 p-8">
-        <h1 className="mb-4 text-3xl font-bold">Welcome to Your Dashboard</h1>
-        <p>Select an option from the menu to get started.</p>
-      </main>
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Settings className="h-6 w-6" />
+              账号设置
+            </CardTitle>
+            <CardDescription>
+              管理您的账号信息，包括个人资料和安全设置
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button className="w-full" variant="outline">
+              设置
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }

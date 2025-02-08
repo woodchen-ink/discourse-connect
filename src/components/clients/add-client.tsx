@@ -1,12 +1,17 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { AddClientAction } from "@/actions/add-client";
+import { Plus } from "lucide-react";
 
+import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -15,65 +20,111 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export function AddClientButton() {
-  const [isAddClientOpen, setIsAddClientOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
+  const router = useRouter();
+
+  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setIsLoading(true);
+
+    const formData = new FormData(event.currentTarget);
+    const response = await AddClientAction(formData);
+
+    setIsLoading(false);
+
+    if (response.success) {
+      setOpen(false);
+      router.refresh();
+      toast({
+        title: "应用创建成功",
+        description: "您可以开始使用新创建的应用了",
+      });
+    } else {
+      toast({
+        variant: "destructive",
+        title: "创建失败",
+        description: response.error,
+      });
+    }
+  }
 
   return (
-    <Dialog open={isAddClientOpen} onOpenChange={setIsAddClientOpen}>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>Add Client</Button>
+        <Button>
+          <Plus className="mr-2 h-4 w-4" />
+          新建应用
+        </Button>
       </DialogTrigger>
       <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Add New Client</DialogTitle>
-        </DialogHeader>
-        <form action={AddClientAction}>
+        <form onSubmit={onSubmit}>
+          <DialogHeader>
+            <DialogTitle>创建新应用</DialogTitle>
+            <DialogDescription>
+              添加一个新的 OAuth 应用以使用 Q58 Connect 服务
+            </DialogDescription>
+          </DialogHeader>
           <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
-                Name
-              </Label>
-              <Input id="name" name="name" className="col-span-3" />
-            </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="home" className="text-right">
-                Home Page
-              </Label>
-              <Input id="home" name="home" className="col-span-3" />
-            </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="logo" className="text-right">
-                Logo
-              </Label>
-              <Input id="logo" name="logo" className="col-span-3" />
-            </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="description" className="text-right">
-                Description
-              </Label>
+            <div className="grid gap-2">
+              <Label htmlFor="name">应用名称</Label>
               <Input
-                id="description"
-                name="description"
-                className="col-span-3"
+                id="name"
+                name="name"
+                placeholder="例如：我的博客"
+                disabled={isLoading}
               />
             </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="redirectUri" className="text-right">
-                Redirect URI
-              </Label>
+            <div className="grid gap-2">
+              <Label htmlFor="home">应用主页</Label>
+              <Input
+                id="home"
+                name="home"
+                placeholder="https://example.com"
+                disabled={isLoading}
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="logo">应用图标</Label>
+              <Input
+                id="logo"
+                name="logo"
+                placeholder="https://example.com/logo.png"
+                disabled={isLoading}
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="redirectUri">回调地址</Label>
               <Input
                 id="redirectUri"
                 name="redirectUri"
-                className="col-span-3"
+                placeholder="https://example.com/oauth/callback"
+                disabled={isLoading}
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="description">应用描述</Label>
+              <Input
+                id="description"
+                name="description"
+                placeholder="简单描述一下您的应用"
+                disabled={isLoading}
               />
             </div>
           </div>
-          <div className="flex justify-end">
-            <Button type="submit">Add Client</Button>
-          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setOpen(false)}
+              disabled={isLoading}
+            >
+              取消
+            </Button>
+            <Button type="submit" disabled={isLoading}>
+              创建
+            </Button>
+          </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>
