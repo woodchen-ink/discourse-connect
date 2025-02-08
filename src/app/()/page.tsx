@@ -33,7 +33,7 @@ export default function IndexPage() {
                 开始使用
               </Button>
             </Link>
-            <Link href="https://github.com/Tuluobo/discourse-connect">
+            <Link href="https://github.com/woodchen-ink/discourse-connect">
               <Button
                 size="lg"
                 variant="outline"
@@ -47,7 +47,7 @@ export default function IndexPage() {
       </main>
       <footer className="bg-white py-8 shadow-inner dark:bg-gray-800">
         <div className="mx-auto max-w-7xl px-4 text-center text-gray-600 dark:text-gray-400 sm:px-6 lg:px-8">
-          © 2024{" "}
+          © 2025{" "}
           <a
             href="https://q58.pro"
             className="text-[#25263A] hover:underline dark:text-[#A0A1B2]"

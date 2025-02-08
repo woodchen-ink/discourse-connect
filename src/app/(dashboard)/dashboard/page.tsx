@@ -42,9 +42,11 @@ export default function DashboardPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Button className="w-full" variant="outline">
-              设置
-            </Button>
+            <Link href="/dashboard/settings">
+              <Button className="w-full" variant="outline">
+                设置
+              </Button>
+            </Link>
           </CardContent>
         </Card>
       </div>

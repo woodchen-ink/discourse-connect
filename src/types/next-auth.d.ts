@@ -6,6 +6,8 @@ export type ExtendedUser = User & {
   username?: string;
   avatarUrl?: string;
   role: UserRole;
+  moderator: boolean;
+  groups: string[];
 };
 
 declare module "next-auth/jwt" {
@@ -13,6 +15,8 @@ declare module "next-auth/jwt" {
     username?: string;
     avatarUrl?: string;
     role: UserRole;
+    moderator: boolean;
+    groups: string[];
   }
 }
 

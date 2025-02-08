@@ -40,29 +40,35 @@ export default async function ClientsPage() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>应用名称</TableHead>
-              <TableHead>Client ID</TableHead>
-              <TableHead>Client Secret</TableHead>
+              <TableHead className="w-[200px]">应用名称</TableHead>
+              <TableHead className="w-[200px]">Client ID</TableHead>
+              <TableHead className="w-[200px]">Client Secret</TableHead>
               <TableHead>回调地址</TableHead>
-              <TableHead className="text-right">操作</TableHead>
+              <TableHead className="w-[140px]">操作</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {clients.map((client) => (
               <TableRow key={client.id}>
-                <TableCell>{client.name}</TableCell>
-                <TableCell className="font-mono">{client.clientId}</TableCell>
-                <TableCell className="font-mono">
+                <TableCell className="font-medium">{client.name}</TableCell>
+                <TableCell className="font-mono text-sm">
+                  {client.clientId}
+                </TableCell>
+                <TableCell className="font-mono text-sm">
                   {client.clientSecret}
                 </TableCell>
-                <TableCell>{client.redirectUri}</TableCell>
-                <TableCell className="text-right">
-                  <Button variant="outline" size="sm" className="mr-2">
-                    编辑
-                  </Button>
-                  <Button variant="destructive" size="sm">
-                    删除
-                  </Button>
+                <TableCell className="max-w-[300px] truncate">
+                  {client.redirectUri}
+                </TableCell>
+                <TableCell>
+                  <div className="flex items-center gap-2">
+                    <Button variant="outline" size="sm">
+                      编辑
+                    </Button>
+                    <Button variant="destructive" size="sm">
+                      删除
+                    </Button>
+                  </div>
                 </TableCell>
               </TableRow>
             ))}
