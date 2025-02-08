@@ -49,7 +49,7 @@ export default function IndexPage() {
         <div className="mx-auto max-w-7xl px-4 text-center text-gray-600 dark:text-gray-400 sm:px-6 lg:px-8">
           © 2024{" "}
           <a
-            href="https://shuzimumin.com"
+            href="https://q58.pro"
             className="text-[#25263A] hover:underline dark:text-[#A0A1B2]"
           >
             Q58论坛

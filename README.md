@@ -74,7 +74,7 @@ pnpm turbo
 
 ### 1. 授权请求
 
-**端点：** `/oauth/authorize`
+**端点：** `https://connect.q58.pro/oauth/authorize`
 
 **方法：** GET
 
@@ -93,7 +93,7 @@ pnpm turbo
 
 ### 2. 获取访问令牌
 
-**端点：** `/api/oauth/access_token`
+**端点：** `https://connect.q58.pro/api/oauth/access_token`
 
 **方法：** POST
 
@@ -114,7 +114,7 @@ pnpm turbo
 
 ### 3. 获取用户信息
 
-**端点：** `/api/oauth/user`
+**端点：** `https://connect.q58.pro/api/oauth/user`
 
 **方法：** GET
 
