@@ -8,8 +8,8 @@ import { Providers } from "./providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Next Template",
-  description: "Next Template",
+  title: "Q58 Connect",
+  description: "Q58 Connect, 基于Q58论坛的OAuth 2.0认证服务",
 };
 
 export default function RootLayout({
