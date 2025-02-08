@@ -76,7 +76,7 @@ export function AuthorizationCard({
         <p className="mb-6 text-center">
           {client.description}
           <br />
-          想要访问您的 Q58-Community 账户
+          想要访问您的 Q58论坛 账户
         </p>
         <div className="space-y-4">
           {permissions.map((permission) => (
