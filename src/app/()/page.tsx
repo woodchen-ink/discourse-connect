@@ -23,23 +23,14 @@ export default function IndexPage() {
               Q58 Connect
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-lg text-gray-600 dark:text-gray-300">
-              基于 Discourse SSO 的 OAuth
-              认证服务，让用户使用论坛账号快速登录您的应用
+              基于Q58论坛的OAuth 2.0认证服务,
+              让用户使用Q58论坛账号快速登录您的应用
             </p>
             <div className="mt-10 flex flex-col justify-center space-y-4 sm:flex-row sm:space-x-6 sm:space-y-0">
               <Link href="/dashboard">
                 <Button size="lg" className="w-full sm:w-auto">
                   开始使用
                   <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
-              <Link href="https://github.com/Tuluobo/discourse-connect">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="w-full sm:w-auto"
-                >
-                  查看源码
                 </Button>
               </Link>
             </div>
