@@ -11,6 +11,7 @@ export function DashboardHeader() {
     if (pathname === "/dashboard") return "控制台";
     if (pathname === "/dashboard/clients") return "应用管理";
     if (pathname.includes("/dashboard/clients/")) return "应用编辑";
+    if (pathname === "/admin") return "管理后台";
     return "";
   };
 

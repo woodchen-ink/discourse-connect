@@ -89,6 +89,14 @@ export function NavBar() {
                   <DropdownMenuItem asChild>
                     <Link href="/dashboard/clients">应用管理</Link>
                   </DropdownMenuItem>
+                  {user.role === "ADMIN" && (
+                    <>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem asChild>
+                        <Link href="/admin">管理后台</Link>
+                      </DropdownMenuItem>
+                    </>
+                  )}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     className="text-red-600 dark:text-red-400"
