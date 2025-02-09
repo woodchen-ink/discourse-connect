@@ -1,7 +1,9 @@
 "use client";
 
+import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { User } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 
@@ -18,8 +20,14 @@ import {
 } from "../ui/dropdown-menu";
 
 export function NavBar() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  const router = useRouter();
   const user = session?.user;
+
+  const handleSignOut = async () => {
+    await signOut({ redirect: false });
+    router.push("/");
+  };
 
   return (
     <nav className="sticky top-0 z-10 bg-white shadow-md dark:bg-gray-800">
@@ -36,7 +44,16 @@ export function NavBar() {
 
           <div className="flex items-center space-x-4">
             <ThemeToggle />
-            {user ? (
+            {status === "loading" ? (
+              <Button
+                variant="outline"
+                size="icon"
+                className="relative h-9 w-9 overflow-hidden rounded-full"
+                disabled
+              >
+                <User className="h-5 w-5" />
+              </Button>
+            ) : user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
@@ -75,7 +92,7 @@ export function NavBar() {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     className="text-red-600 dark:text-red-400"
-                    onClick={() => signOut()}
+                    onClick={handleSignOut}
                   >
                     退出登录
                   </DropdownMenuItem>
