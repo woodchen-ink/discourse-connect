@@ -2,16 +2,10 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { signIn } from "@/actions/user-authorize";
-import { useSession } from "next-auth/react";
+import { signIn as nextAuthSignIn, useSession } from "next-auth/react";
 
 interface UserAuthorizeProps extends React.HTMLAttributes<HTMLDivElement> {
   data: Record<string, any>;
-}
-
-interface SignInResult {
-  error?: string;
-  ok?: boolean;
 }
 
 export function UserAuthorize({
@@ -30,7 +24,11 @@ export function UserAuthorize({
     }
     setIsLoading(true);
     try {
-      const result = (await signIn({ ...data })) as SignInResult;
+      const result = await nextAuthSignIn("credentials", {
+        ...data,
+        redirect: false,
+      });
+
       if (result?.error) {
         setError(result.error);
       } else {
