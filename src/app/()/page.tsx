@@ -105,14 +105,14 @@ export default function IndexPage() {
                 </div>
                 <pre className="overflow-x-auto text-sm text-gray-300">
                   <code>{`// 1. 重定向到授权页面（必须通过浏览器重定向，不能使用 AJAX/Fetch）
-window.location.href = 'https://connect.q58.pro/oauth/authorize?' + new URLSearchParams({
+window.location.href = 'https://connect.q58.club/oauth/authorize?' + new URLSearchParams({
   response_type: 'code',
   client_id: 'your_client_id',
   redirect_uri: 'https://your-app.com/callback'
 });
 
 // 2. 在回调页面获取访问令牌
-const response = await fetch('https://connect.q58.pro/api/oauth/access_token', {
+const response = await fetch('https://connect.q58.club/api/oauth/access_token', {
   method: 'POST',
   body: new URLSearchParams({
     code: '授权码',
@@ -122,7 +122,7 @@ const response = await fetch('https://connect.q58.pro/api/oauth/access_token', {
 const { access_token } = await response.json();
 
 // 3. 获取用户信息
-const userInfo = await fetch('https://connect.q58.pro/api/oauth/user', {
+const userInfo = await fetch('https://connect.q58.club/api/oauth/user', {
   headers: {
     'Authorization': \`Bearer \${access_token}\`
   }
@@ -138,7 +138,7 @@ const userInfo = await fetch('https://connect.q58.pro/api/oauth/user', {
         <div className="mx-auto max-w-7xl px-4 text-center text-gray-600 dark:text-gray-400 sm:px-6 lg:px-8">
           © 2024{" "}
           <a
-            href="https://q58.pro"
+            href="https://q58.club"
             className="text-[#25263A] hover:underline dark:text-[#A0A1B2]"
           >
             Q58论坛
