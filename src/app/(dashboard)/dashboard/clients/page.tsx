@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { getClientsByUserId } from "@/lib/dto/client";
@@ -12,6 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { AddClientButton } from "@/components/clients/add-client";
+import { DeleteClientButton } from "@/components/clients/delete-client";
 
 // 创建 Prisma 客户端实例
 async function fetchClients(userId: string) {
@@ -62,12 +64,15 @@ export default async function ClientsPage() {
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center gap-2">
-                    <Button variant="outline" size="sm">
-                      编辑
-                    </Button>
-                    <Button variant="destructive" size="sm">
-                      删除
-                    </Button>
+                    <Link href={`/dashboard/clients/${client.id}`}>
+                      <Button variant="outline" size="sm">
+                        编辑
+                      </Button>
+                    </Link>
+                    <DeleteClientButton
+                      clientId={client.id}
+                      clientName={client.name}
+                    />
                   </div>
                 </TableCell>
               </TableRow>

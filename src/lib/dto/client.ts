@@ -25,3 +25,11 @@ export async function getClientsByUserId(userId: string) {
     },
   });
 }
+
+export async function getClientById(id: string) {
+  return await prisma.client.findUnique({
+    where: {
+      id,
+    },
+  });
+}
