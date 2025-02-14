@@ -68,7 +68,8 @@ export function DeleteClientButton({
         <AlertDialogHeader>
           <AlertDialogTitle>确认删除应用？</AlertDialogTitle>
           <AlertDialogDescription>
-            您确定要删除应用"{clientName}"吗？此操作不可撤销，删除后将无法恢复。
+            您确定要删除应用&quot;{clientName}
+            &quot;吗？此操作不可撤销，删除后将无法恢复。
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
