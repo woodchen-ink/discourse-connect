@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { handleAuthorizeAction } from "@/actions/authorizing";
+import { Client } from "@prisma/client";
 import {
   ChevronsDownUp,
   ChevronsUpDown,
@@ -19,8 +20,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
-
-import { Client } from ".prisma/client";
 
 interface Permission {
   id: string;
