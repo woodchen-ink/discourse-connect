@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import type { Prisma } from "@prisma/client";
 
 import { getClientsByUserId } from "@/lib/dto/client";
 import { getCurrentUser } from "@/lib/session";
@@ -14,6 +15,8 @@ import {
 } from "@/components/ui/table";
 import { AddClientButton } from "@/components/clients/add-client";
 import { DeleteClientButton } from "@/components/clients/delete-client";
+
+type Client = Awaited<ReturnType<typeof getClientsByUserId>>[number];
 
 // 创建 Prisma 客户端实例
 async function fetchClients(userId: string) {
@@ -50,7 +53,7 @@ export default async function ClientsPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {clients.map((client) => (
+            {clients.map((client: Client) => (
               <TableRow key={client.id}>
                 <TableCell className="font-medium">{client.name}</TableCell>
                 <TableCell className="font-mono text-sm">

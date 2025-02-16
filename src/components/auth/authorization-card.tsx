@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { handleAuthorizeAction } from "@/actions/authorizing";
-import { Client } from "@prisma/client";
 import {
   ChevronsDownUp,
   ChevronsUpDown,
@@ -20,6 +19,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+
+import { Client } from ".prisma/client";
 
 interface Permission {
   id: string;
@@ -45,6 +46,7 @@ export function AuthorizationCard({
   const [expandedPermission, setExpandedPermission] = useState<string | null>(
     null,
   );
+  const [isAuthorizing, setIsAuthorizing] = useState(false);
   const router = useRouter();
 
   const togglePermission = (id: string) => {
@@ -52,75 +54,99 @@ export function AuthorizationCard({
   };
 
   const authorizingHandler = async () => {
-    const url = await handleAuthorizeAction(
-      oauthParams,
-      client.userId,
-      client.id,
-      permissions[0].id,
-    );
-    router.push(url);
+    try {
+      setIsAuthorizing(true);
+      const url = await handleAuthorizeAction(
+        oauthParams,
+        client.userId,
+        client.id,
+        permissions[0].id,
+      );
+      router.push(url);
+    } catch (error) {
+      setIsAuthorizing(false);
+      // 这里可以添加错误提示
+    }
   };
 
   return (
-    <Card className="w-full max-w-2xl">
-      <CardHeader className="text-center">
-        <div className="mb-4 flex items-center justify-center space-x-4">
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-red-100">
-            <span className="text-3xl font-bold text-red-500">B</span>
+    <Card className="w-full max-w-2xl transform transition-all duration-300 hover:shadow-lg">
+      <CardHeader className="space-y-4 text-center">
+        <div className="flex items-center justify-center space-x-6">
+          <div className="group relative">
+            <div className="absolute -inset-0.5 rounded-full bg-gradient-to-r from-pink-600 to-purple-600 opacity-50 blur transition duration-300 group-hover:opacity-75"></div>
+            <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-white">
+              <span className="bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-4xl font-bold text-transparent">
+                {client.name[0].toUpperCase()}
+              </span>
+            </div>
           </div>
-          <GithubIcon className="h-16 w-16" />
         </div>
-        <CardTitle className="text-2xl font-bold">授权 {client.name}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p className="mb-6 text-center">
-          {client.description}
-          <br />
-          想要访问您的 Q58论坛 账户
+        <CardTitle className="bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-3xl font-bold text-transparent">
+          授权 {client.name}
+        </CardTitle>
+        <p className="text-sm text-gray-500">
+          该应用程序请求访问您的Q58论坛账号
         </p>
-        <div className="space-y-4">
+      </CardHeader>
+
+      <CardContent className="space-y-4">
+        <div className="space-y-3 rounded-lg bg-gray-50 p-4">
+          <h3 className="text-lg font-semibold">请求的权限</h3>
           {permissions.map((permission) => (
-            <div key={permission.id} className="rounded-lg border p-4">
-              <div
-                className="flex cursor-pointer items-center justify-between"
-                onClick={() => togglePermission(permission.id)}
-              >
-                <div className="flex items-center space-x-3">
-                  <Checkbox
-                    id={permission.id}
-                    checked={permission.id === "read_profile"}
-                    disabled={permission.id === "read_profile"}
-                  />
+            <div
+              key={permission.id}
+              className="rounded-md border bg-white p-4 transition-all duration-200 hover:border-purple-200"
+              onClick={() => togglePermission(permission.id)}
+            >
+              <div className="flex cursor-pointer items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <Checkbox id={permission.id} checked disabled />
                   <label htmlFor={permission.id} className="font-medium">
                     {permission.name}
                   </label>
                 </div>
                 {expandedPermission === permission.id ? (
-                  <ChevronsDownUp />
+                  <ChevronsDownUp className="h-4 w-4 text-gray-500" />
                 ) : (
-                  <ChevronsUpDown />
+                  <ChevronsUpDown className="h-4 w-4 text-gray-500" />
                 )}
               </div>
               {expandedPermission === permission.id && (
-                <p className="mt-2 text-sm text-gray-600">
+                <div className="mt-2 pl-6 text-sm text-gray-500">
                   {permission.description}
-                </p>
+                </div>
               )}
             </div>
           ))}
         </div>
       </CardContent>
-      <CardFooter className="flex flex-col items-center">
-        <div className="mb-4 flex space-x-4">
-          <Button variant="outline">取消</Button>
+
+      <CardFooter className="flex flex-col items-center space-y-4">
+        <div className="flex space-x-4">
           <Button
-            className="bg-green-600 text-white hover:bg-green-700"
-            onClick={authorizingHandler}
+            variant="outline"
+            className="min-w-[100px] transition-all duration-200 hover:bg-gray-100"
+            disabled={isAuthorizing}
           >
-            授权 {client.name}
+            取消
+          </Button>
+          <Button
+            className="min-w-[100px] bg-gradient-to-r from-pink-600 to-purple-600 text-white transition-all duration-200 hover:from-pink-700 hover:to-purple-700"
+            onClick={authorizingHandler}
+            disabled={isAuthorizing}
+          >
+            {isAuthorizing ? (
+              <div className="flex items-center">
+                <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
+                授权中...
+              </div>
+            ) : (
+              `授权 ${client.name}`
+            )}
           </Button>
         </div>
-        <p className="mb-4 text-sm text-gray-500">
+        <p className="text-sm text-gray-500">
           授权将重定向到 {client.redirectUri}
         </p>
         <div className="flex justify-center space-x-8 text-sm text-gray-500">
